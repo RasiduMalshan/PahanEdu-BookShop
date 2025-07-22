@@ -15,7 +15,18 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="text-center">Add Books</h4>
-                    <form action="../AdminAddBookServlet" method="post" enctype="multipart/form-data">
+
+                    <c:if test="${not empty succMsg}">
+                        <p class="text-center text-success">${succMsg}</p>
+                        <c:remove var="succMsg" scope="session"/>
+                    </c:if>
+
+                    <c:if test="${not empty failedMsg}">
+                        <p class="text-center text-danger">${failedMsg}</p>
+                        <c:remove var="failedMsg" scope="session"/>
+                    </c:if>
+
+                    <form action="../add_books" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="exampleInputBookName">Book Name</label>
                             <input name="bname" type="text" class="form-control" id="exampleInputBookName" aria-describedby="emailHelp">
@@ -30,14 +41,14 @@
                         </div>
                         <div class="form-group">
                             <label for="inputState1">Book Categories</label>
-                            <select id="inputState1" name="btype" class="form-control">
+                            <select id="inputState1" name="categories" class="form-control">
                                 <option selected>--select--</option>
                                 <option value="New">New Book</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="inputState2">Book Status</label>
-                            <select id="inputState2" name="bstatus" class="form-control">
+                            <select id="inputState2" name="status" class="form-control">
                                 <option selected>--select--</option>
                                 <option value="Active">Active</option>
                                 <option value="Inactive">Inactive</option>
