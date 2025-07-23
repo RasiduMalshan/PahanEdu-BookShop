@@ -9,6 +9,9 @@ public class BookDtls {
     private String status;
     private String photoName;
     private String email;
+
+    public BookDtls(){}
+
     public BookDtls(String bookName, String author, String price, String bookCategory, String status, String photoName, String email){
         super();
         this.bookName = bookName;

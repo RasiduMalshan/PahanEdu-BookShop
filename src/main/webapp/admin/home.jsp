@@ -25,7 +25,7 @@
             <a href="add_books.jsp">
                 <div class="card">
                     <div class="card-body text-center">
-                        <i class="fa-solid fa-house fa-3x text-primary"></i><br>
+                        <i class="fa-solid fa-plus fa-3x text-primary"></i><br>
                         <h4>Add Books</h4>
                         ----------
                     </div>
