@@ -25,7 +25,7 @@
   
   <%@include file="all_component/navbar.jsp"%>
   <div class="container-fluid back-img">
-    <h2 class="text-center text-danger">Online Billing System</h2>
+    <h2 class="text-center text-danger p-5">Online Billing System</h2>
   </div>
 
   <!-- Start Recent Book-->
@@ -76,7 +76,7 @@
 
     </div>
     <div class="text-center mt-1">
-      <a href="" class="btn btn-danger btn-sm text-white">View All</a>
+      <a href="all_recent_book.jsp" class="btn btn-danger btn-sm text-white">View All</a>
     </div>
   </div>
   <!--End Recent Book-->
@@ -117,7 +117,7 @@
 
     </div>
     <div class="text-center mt-1">
-      <a href="" class="btn btn-danger btn-sm text-white">View All</a>
+      <a href="all_new_book.jsp" class="btn btn-danger btn-sm text-white">View All</a>
     </div>
   </div>
   <!--End New Book-->
@@ -156,7 +156,7 @@
       %>
     </div>
     <div class="text-center mt-1">
-      <a href="" class="btn btn-danger btn-sm text-white">View All</a>
+      <a href="all_old_book.jsp" class="btn btn-danger btn-sm text-white">View All</a>
     </div>
   </div>
   <!--End Old Book-->
