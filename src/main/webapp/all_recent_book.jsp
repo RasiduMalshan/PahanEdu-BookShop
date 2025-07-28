@@ -36,7 +36,7 @@
                                 {%>
                             Categories: <%=b.getBookCategory()%></p>
                         <div class="row">
-                            <a href="" class="btn btn-success btn-sm ml-5">View</a>
+                            <a href="view_books.jsp" class="btn btn-success btn-sm ml-5">View</a>
                             <a href="" class="btn btn-danger btn-sm ml-1"><i class="fa-solid fa-rupee-sign"></i>.<%=b.getPrice()%></a>
                         </div>
                         <%}else {%>
@@ -44,7 +44,7 @@
                         </p>
                         <div class="row">
                             <a href="" class="btn btn-danger btn-sm ml-2"><i class="fa-solid fa-cart-plus"></i> Add Cart</a>
-                            <a href="" class="btn btn-success btn-sm ml-1">View</a>
+                            <a href="view_books.jsp?bid=<%=b.getBookId()%>" class="btn btn-success btn-sm ml-1">View</a>
                             <a href="" class="btn btn-danger btn-sm ml-1"><i class="fa-solid fa-rupee-sign"></i>.<%=b.getPrice()%></a>
                         </div>
                         <%}
