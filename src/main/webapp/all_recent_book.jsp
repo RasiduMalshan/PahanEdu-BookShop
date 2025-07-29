@@ -2,6 +2,7 @@
 <%@ page import="DB.DBConnect" %>
 <%@ page import="entity.BookDtls" %>
 <%@ page import="java.util.List" %>
+<%@ page import="entity.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -14,6 +15,11 @@
     </style>
 </head>
 <body>
+
+<%
+    User u = (User) session.getAttribute("userobj");
+%>
+
 <%@include file="all_component/navbar.jsp"%>
 <div class="container-fluid">
     <div class="row p-3">
@@ -43,7 +49,17 @@
                         Categories: <%=b.getBookCategory()%>
                         </p>
                         <div class="row">
-                            <a href="" class="btn btn-danger btn-sm ml-2"><i class="fa-solid fa-cart-plus"></i> Add Cart</a>
+                            <%
+                                if (u == null){
+                            %>
+                            <a href="login.jsp" class="btn btn-danger btn-sm ml-2"><i class="fa-solid fa-cart-plus"></i>Add Cart</a>
+                            <%
+                            }else{
+                            %>
+                            <a href="cart?bid=<%=b.getBookId()%>&&uid=<%=u.getId()%>" class="btn btn-danger btn-sm ml-2"><i class="fa-solid fa-cart-plus"></i>Add Cart</a>
+                            <%
+                                }
+                            %>
                             <a href="view_books.jsp?bid=<%=b.getBookId()%>" class="btn btn-success btn-sm ml-1">View</a>
                             <a href="" class="btn btn-danger btn-sm ml-1"><i class="fa-solid fa-rupee-sign"></i>.<%=b.getPrice()%></a>
                         </div>
