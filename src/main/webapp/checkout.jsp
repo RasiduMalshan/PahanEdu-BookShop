@@ -1,5 +1,11 @@
-
+<%@ page import="DAO.CartDAOImpl" %>
+<%@ page import="DB.DBConnect" %>
+<%@ page import="entity.User" %>
+<%@ page import="entity.Cart" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page isELIgnored="false" %>
 <html>
 <head>
     <title>Cart Page</title>
@@ -7,6 +13,26 @@
 </head>
 <body style="background-color: #f0f1f2">
 <%@include file="all_component/navbar.jsp"%>
+
+<c:if test="${empty userobj}">
+    <c:redirect url="login.jsp"></c:redirect>
+</c:if>
+
+<c:if test="${not empty succMsg}">
+    <div class="alert alert-success" role="alert">
+            ${succMsg}
+    </div>
+    <c:remove var="succMsg" scope="session"/>
+</c:if>
+
+<c:if test="${not empty failedMsg}">
+    <div class="alert alert-danger" role="alert">
+        ${failedMsg}
+    </div>
+    <c:remove var="failedMsg" scope="session"/>
+</c:if>
+
+
 <div class="container">
     <div class="row p-2">
         <div class="col-md-6">
@@ -16,31 +42,44 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
+                            <th scope="col">Book Name</th>
+                            <th scope="col">Author</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Action</th>
                         </tr>
                         </thead>
+
+                        <%
+                            User u = (User)session.getAttribute("userobj");
+
+                            CartDAOImpl dao = new CartDAOImpl(DBConnect.getConn());
+                            List<Cart> cart = dao.getBookByUser(u.getId());
+                            Double totalPrice=0.00;
+
+                            for (Cart c:cart)
+                            {
+                                totalPrice=c.getTotalPrice();
+                            %>
+                                <tr>
+                                    <th scope="row"><%=c.getBookName()%></th>
+                                    <td><%=c.getAuthor()%></td>
+                                    <td><%=c.getPrice()%></td>
+                                    <td>
+                                        <a href="remove_book?bid=<%=c.getBid()%>&&uid=<%=c.getUserId()%>" class="btn btn-sm btn-danger">Remove</a>
+                                    </td>
+                                </tr>
+                             <%}
+
+                            %>
+
+                        <tr>
+                            <td>Total Price</td>
+                            <td></td>
+                            <td></td>
+                            <td><%=totalPrice%></td>
+                        </tr>
+
                         <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -55,29 +94,29 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="inputName">Name</label>
-                                <input type="text" class="form-control" id="inputName" value="">
+                                <input type="text" class="form-control" id="inputName" value="<%=u.getName()%>" readonly="readonly">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputEmail">Email</label>
-                                <input type="email" class="form-control" id="inputEmail" value="">
+                                <input type="email" class="form-control" id="inputEmail" value="<%=u.getEmail()%>" readonly="readonly">
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="inputNumber">Phone Number</label>
-                                <input type="number" class="form-control" id="inputNumber">
+                                <input type="number" class="form-control" id="inputNumber" value="<%=u.getPhno()%>" readonly="readonly">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputAddress">Address</label>
-                                <input type="text" class="form-control" id="inputAddress" placeholder="Enter Address">
+                                <input type="text" class="form-control" id="inputAddress" value="<%=u.getAddress()%>" readonly="readonly">
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="inputLandmark">Landmark</label>
-                                <input type="text" class="form-control" id="inputLandmark" placeholder="Landmark">
+                                <input type="text" class="form-control" id="inputLandmark" >
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputCity">City</label>
