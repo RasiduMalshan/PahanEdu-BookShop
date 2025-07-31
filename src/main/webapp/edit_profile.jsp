@@ -15,18 +15,30 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="text-center text-primary">Edit Profile</h4>
-                    <form action="<%= request.getContextPath() %>/register" method="post">
+
+                    <c:if test="${not empty failedMsg}">
+                        <h5 class="text-center text-danger">${failedMsg}</h5>
+                        <c:remove var="failedMsg" scope="session"/>
+                    </c:if>
+
+                    <c:if test="${not empty succMsg}">
+                        <h5 class="text-center text-success">${succMsg}</h5>
+                        <c:remove var="succMsg" scope="session"/>
+                    </c:if>
+
+                    <form action="update_profile" method="post">
+                        <input type="hidden" value="${userobj.id}" name="id">
                         <div class="form-group">
                             <label for="exampleInputName">Full Name</label>
-                            <input name="fname" type="text" class="form-control" id="exampleInputName" aria-describedby="emailHelp" placeholder="Enter Full Name" required="required">
+                            <input name="fname" type="text" class="form-control" id="exampleInputName" aria-describedby="emailHelp" required="required" value="${userobj.name}">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail">Email Address</label>
-                            <input name="email" type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email" required="required">
+                            <input name="email" type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" required="required" value="${userobj.email}">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPhone">Phone Number</label>
-                            <input name="phno" type="number" class="form-control" id="exampleInputPhone" aria-describedby="emailHelp" placeholder="Enter Phone No" required="required">
+                            <input name="phno" type="number" class="form-control" id="exampleInputPhone" aria-describedby="emailHelp" required="required" value="${userobj.phno}">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword">Password</label>
