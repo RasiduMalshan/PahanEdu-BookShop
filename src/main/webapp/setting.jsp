@@ -17,10 +17,16 @@
 
 </head>
 <body style="background-color: #f0f1f2">
+
+<c:if test="${empty userobj}">
+    <c:redirect url="login.jsp"/>
+</c:if>
+
 <%@include file="all_component/navbar.jsp"%>
 
 <div class="container">
-    <h3 class="text-center">Hello, Friend</h3>
+
+    <h3 class="text-center">Hello, ${userobj.name}</h3>
     <div class="row p-5">
         <div class="col-md-6">
             <a href="sell_book.jsp">

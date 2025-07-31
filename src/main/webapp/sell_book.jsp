@@ -7,6 +7,11 @@
     <%@include file="all_component/allCss.jsp"%>
 </head>
 <body style="background-color: #f0f1f2">
+
+<c:if test="${empty userobj}">
+    <c:redirect url="login.jsp"/>
+</c:if>
+
 <%@include file="all_component/navbar.jsp"%>
 
 <div class="container">
@@ -15,7 +20,19 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="text-center text-primary p-1">Sell Old Books</h5>
-                    <form action="" method="post" enctype="multipart/form-data">
+
+                    <c:if test="${not empty succMsg}">
+                        <p class="text-center text-success">${succMsg}</p>
+                        <c:remove var="succMsg" scope="session"/>
+                    </c:if>
+
+                    <c:if test="${not empty failedMsg}">
+                        <p class="text-center text-danger">${failedMsg}</p>
+                        <c:remove var="failedMsg" scope="session"/>
+                    </c:if>
+
+                    <form action="add_old_book" method="post" enctype="multipart/form-data">
+                        <input type="hidden" value="${userobj.email}" name="user">
                         <div class="form-group">
                             <label for="exampleInputBookName">Book Name</label>
                             <input name="bname" type="text" class="form-control" id="exampleInputBookName" aria-describedby="emailHelp">
