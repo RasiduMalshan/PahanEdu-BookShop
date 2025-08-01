@@ -13,7 +13,7 @@
         <div class="col-md-3">
 
             <c:if test="${not empty userobj}">
-                <a class="btn btn-success"><i class="fa-solid fa-user"></i> ${userobj.name}</a>
+                <a  class="btn btn-success"><i class="fa-solid fa-user"></i> ${userobj.name}</a>
                 <a data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-primary text-white"><i class="fa-solid fa-sign-out-alt"></i> Logout</a>
             </c:if>
 
