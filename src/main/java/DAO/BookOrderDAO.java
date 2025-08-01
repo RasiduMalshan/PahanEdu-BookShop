@@ -10,4 +10,6 @@ public interface BookOrderDAO {
 
     public List<BookOrder> getBook(String email);
 
+    public List<BookOrder> getAllOrder();
+
 }

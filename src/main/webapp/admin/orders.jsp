@@ -1,10 +1,21 @@
+<%@ page import="DAO.BookOrderDAOImpl" %>
+<%@ page import="DB.DBConnect" %>
+<%@ page import="java.util.List" %>
+<%@ page import="entity.BookOrder" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page isELIgnored="false" %>
 <html>
 <head>
     <title>Admin : All Orders</title>
     <%@include file="allCss.jsp"%>
 </head>
 <body>
+
+<c:if test="${empty userobj}">
+    <c:redirect url="../login.jsp"/>
+</c:if>
+
 <%@include file="navbar.jsp"%>
 <h3 class="text-center">Hello Admin</h3>
 <table class="table table-striped">
@@ -22,39 +33,27 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-    </tr>
-    <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-    </tr>
-    <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-    </tr>
+
+    <%
+        BookOrderDAOImpl dao = new BookOrderDAOImpl(DBConnect.getConn());
+        List<BookOrder> blist = dao.getAllOrder();
+        for (BookOrder b: blist)
+        {%>
+        <tr>
+            <th scope="row"><%=b.getOrderId()%></th>
+            <td><%=b.getUserName()%></td>
+            <td><%=b.getEmail()%></td>
+            <td><%=b.getFulladd()%></td>
+            <td><%=b.getPhno()%></td>
+            <td><%=b.getBookName()%></td>
+            <td><%=b.getAuthor()%></td>
+            <td><%=b.getPrice()%></td>
+            <td><%=b.getPaymentType()%></td>
+        </tr>
+        <%}
+    %>
+
+
     </tbody>
 </table>
 <div style="margin-top: 130px">
