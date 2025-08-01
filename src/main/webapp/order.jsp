@@ -1,3 +1,8 @@
+<%@ page import="entity.User" %>
+<%@ page import="DAO.BookOrderDAOImpl" %>
+<%@ page import="DB.DBConnect" %>
+<%@ page import="java.util.List" %>
+<%@ page import="entity.BookOrder" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page isELIgnored="false" %>
@@ -7,6 +12,11 @@
     <%@include file="all_component/allCss.jsp"%>
 </head>
 <body style="background-color: #f0f1f2">
+
+<c:if test="${empty userobj}">
+    <c:redirect url="login.jsp"></c:redirect>
+</c:if>
+
 <%@include file="all_component/navbar.jsp"%>
 
 <div class="container p-1">
@@ -23,14 +33,25 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-        </tr>
+
+        <%
+            User u = (User) session.getAttribute("userobj");
+            BookOrderDAOImpl dao = new BookOrderDAOImpl(DBConnect.getConn());
+            List<BookOrder> blist = dao.getBook(u.getEmail());
+            for (BookOrder b: blist){
+            %>
+            <tr>
+                <th scope="row"><%=b.getOrderId()%></th>
+                <td><%=b.getUserName()%></td>
+                <td><%=b.getBookName()%></td>
+                <td><%=b.getAuthor()%></td>
+                <td><%=b.getPrice()%></td>
+                <td><%=b.getPaymentType()%></td>
+            </tr>
+            <%
+            }
+        %>
+
         </tbody>
     </table>
 </div>

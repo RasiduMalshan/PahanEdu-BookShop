@@ -45,44 +45,52 @@ public class OrderServlet extends HttpServlet {
             CartDAOImpl dao = new CartDAOImpl(DBConnect.getConn());
 
             List<Cart> blist = dao.getBookByUser(id);
-            BookOrderDAOImpl dao2 = new BookOrderDAOImpl(DBConnect.getConn());
 
-            BookOrder o = null;
-
-            ArrayList<BookOrder> orderList = new ArrayList<BookOrder>();
-            Random r = new Random();
-
-            for (Cart c:blist)
+            if(blist.isEmpty())
             {
-                o = new BookOrder();
-                o.setOrderId("BOOK-ORD-00"+r.nextInt(1000));
-                o.setUserName(name);
-                o.setEmail(email);
-                o.setPhno(phno);
-                o.setFulladd(fullAdd);
-                o.setBookName(c.getBookName());
-                o.setAuthor(c.getAuthor());
-                o.setPrice(c.getPrice()+"");
-                o.setPaymentType(paymentType);
-                orderList.add(o);
-            }
-
-            if ("noselect".equals(paymentType))
-            {
-                session.setAttribute("failedMsg","Choose Payment Method");
+                session.setAttribute("failedMsg","Add Item");
                 resp.sendRedirect("checkout.jsp");
             }else {
+                BookOrderDAOImpl dao2 = new BookOrderDAOImpl(DBConnect.getConn());
 
-                boolean f = dao2.saveOrder(orderList);
+                BookOrder o = null;
 
-                if (f){
-                    resp.sendRedirect("order_success.jsp");
-                }else {
-                    session.setAttribute("failedMsg","Your Order Failed");
-                    resp.sendRedirect("checkout.jsp");
+                ArrayList<BookOrder> orderList = new ArrayList<BookOrder>();
+                Random r = new Random();
+
+                for (Cart c:blist)
+                {
+                    o = new BookOrder();
+                    o.setOrderId("BOOK-ORD-00"+r.nextInt(1000));
+                    o.setUserName(name);
+                    o.setEmail(email);
+                    o.setPhno(phno);
+                    o.setFulladd(fullAdd);
+                    o.setBookName(c.getBookName());
+                    o.setAuthor(c.getAuthor());
+                    o.setPrice(c.getPrice()+"");
+                    o.setPaymentType(paymentType);
+                    orderList.add(o);
                 }
 
+                if ("noselect".equals(paymentType))
+                {
+                    session.setAttribute("failedMsg","Choose Payment Method");
+                    resp.sendRedirect("checkout.jsp");
+                }else {
+
+                    boolean f = dao2.saveOrder(orderList);
+
+                    if (f){
+                        resp.sendRedirect("order_success.jsp");
+                    }else {
+                        session.setAttribute("failedMsg","Your Order Failed");
+                        resp.sendRedirect("checkout.jsp");
+                    }
+
+                }
             }
+
 
         } catch (Exception e) {
             e.printStackTrace();

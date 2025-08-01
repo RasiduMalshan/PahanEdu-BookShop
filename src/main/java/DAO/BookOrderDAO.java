@@ -8,4 +8,6 @@ public interface BookOrderDAO {
 
     public boolean saveOrder(List<BookOrder> b);
 
+    public List<BookOrder> getBook(String email);
+
 }
